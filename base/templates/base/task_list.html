@@ -3,8 +3,11 @@
 {% block content %}
 
 <h1 class="text-2xl underline mb-8">My Todo List</h1>
-<button class="self-center rounded-xl py-3 px-5 bg-gray-300 hover:bg-gray-500 hover:text-white mb-6">
-    <a href="{% url 'task-create' %}">New Task</a>
+<button class="self-center rounded-xl py-3 px-5 bg-gray-500 hover:bg-gray-900 hover:text-white mb-6">
+    <a href="{% url 'task-create' %}">
+        <i class="fa-solid fa-plus"></i>
+        New Task
+    </a>
 </button>
 
 <form method="GET" class="flex items-center w-full justify-between mb-10">
@@ -13,37 +16,45 @@
      value={{ search_input }} ></input>
     <div class = "w-1/4 flex justify-around">
         <button class="px-3 py-1 bg-green-300 hover:bg-green-400 rounded-xl hover:text-white">
-            <input type='submit' value="Search" />
+            <input type='submit' class="cursor-pointer" value="Search" />
         </button>
-        <button  class="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded-xl hover:text-white">
+        <button  class="px-3 py-1 bg-gray-500 hover:bg-gray-400 rounded-xl hover:text-white">
             <a href="{% url 'tasks' %}">Clear</a>
         </button>
     </div>
 </form>
-<table>
-    <thead>
+<table class="table-auto px-3 py-3 my-4">
+    <thead class="bg-green-300 mb-3">
         <tr>
-            <th>Item</th>
-            <th></th>
-            <th></th>
+            <th class="text-center px-3 py-3 border-r border-r-slate-600">Task</th>
+            <th class="text-center px-3 py-3 border-r border-r-slate-600"><i class="fa-solid fa-eye"></i></th>
+            <th class="text-center px-3 py-3 border-r border-r-slate-600"><i class="fa-solid fa-pencil"></i></th>
+            <th class="text-center px-3 py-3"><i class="fa-solid fa-trash"></i></th>
         </tr>
     </thead>
     <tbody>
         {% for task in tasks %}
             <tr>
-                <td>{{ task.title }} </td>
-                <td>
-                    <a href="{% url 'task' task.id %}">View Detail</a>
+                <td class="text-center border-b border-b-slate-500 py-2">{{ task.title }} </td>
+                <td class="text-center border-b border-b-slate-500 py-2">
+                    <a href="{% url 'task' task.id %}" class="hover:text-lg hover:text-gray-700">
+                        View Detail
+                    </a>
+                    {% if task.complete %}
+                        <i class="fa-solid fa-check"></i>
+                    {% else %}
+                        <i class="fa-solid fa-xmark"></i>
+                    {% endif %}
                 </td>
-                <td>
-                    <a href="{% url 'task-update' task.id %}">Edit</a>
+                <td class="text-center border-b border-b-slate-500 py-2">
+                    <a href="{% url 'task-update' task.id %}" class="hover:text-lg hover:text-gray-700">Edit</a>
                 </td>
-                <td>
-                    <a href="{% url 'task-delete' task.id %}">Delete</a>
+                <td class="text-center border-b border-b-slate-500 py-2">
+                    <a href="{% url 'task-delete' task.id %}" class="hover:text-lg hover:text-gray-700">Delete</a>
                 </td>
             </tr>
             {% empty %}
-                <h3>No Tasks found </h3>
+                <h3 class="text-2xl text-center mb-5">No corresponding Tasks found </h3>
         {% endfor %}
     </tbody>
 </table>

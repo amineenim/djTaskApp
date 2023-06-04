@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
     <head>
         <meta charset='utf-8'>
@@ -6,11 +7,16 @@
         <title>TaskMG | {% block title %}{% endblock %}</title>
         <meta name='description' content="">
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+        <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    </head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body class="flex justify-center flex-col">
         <header class="flex justify-between px-6 py-4 mb-10">
-            <h1 class="text-3xl font-bold italic">TODO MANAGEMENT</h1>
+            <h1 class="text-3xl font-bold italic">
+                <a href="{% url 'login' %}">TASK MANAGEMENT</a>
+            </h1>
             <div>
                 {% if request.user.is_authenticated %}
                     {{ request.user }}

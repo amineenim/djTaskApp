@@ -1,4 +1,5 @@
 
+from typing import Any, Dict
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -90,6 +91,23 @@ class TaskUpdate(LoginRequiredMixin, UpdateView) :
     model = Task 
     fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        # Retrieve the initial data from the model or any other source
+        # and set it as initial data for the form fields
+        task = self.get_object()
+        initial['title'] = task.title 
+        initial['description'] = task.description
+        initial['complete'] = task.complete 
+        return initial
+    
+
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        context['update'] = True 
+        return context 
+
 
 # class based view in charge of deleting a task object 
 class TaskDelete(LoginRequiredMixin ,DeleteView) :
