@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>TaskMG | {% block title %}{% endblock %}</title>
+        <meta name='description' content="">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body class="flex justify-center flex-col">
+        <header class="flex justify-between px-6 py-4 mb-10">
+            <h1 class="text-3xl font-bold italic">TODO MANAGEMENT</h1>
+            <div>
+                {% if request.user.is_authenticated %}
+                    {{ request.user }}
+                    <button class="bg-gray-300 px-6 py-3 ml-14 rounded-xl hover:bg-gray-500 hover:text-white">
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </button>
+                {% else %}
+                <button class="bg-gray-300 px-6 py-3 ml-14 rounded-xl hover:bg-gray-500 hover:text-white">
+                    <a href="{% url 'login' %}">Login</a>
+                </button>
+                {% endif %}
+            </div>
+        </header>
+        <div class="self-center w-2/3 bg-gray-300 rounded-2xl  px-6 py-4 flex flex-col drop-shadow-xl" >
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
